@@ -126,4 +126,4 @@ sns.pairplot(df)
 
 
 # RESULT
-        <<INCLUDE YOUR RESULT HERE>>
+Thus we have perform Exploratory Data Analysis on the given data set.
