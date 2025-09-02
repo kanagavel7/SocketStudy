@@ -1,129 +1,127 @@
-# EXNO2DS
+# Ex.No:1a  			Study of Socket Programming
 
-### KANAGAVEL R
-### 212223040085
-# AIM:
-      To perform Exploratory Data Analysis on the given data set.
-      
-# EXPLANATION:
-  The primary aim with exploratory analysis is to examine the data for distribution, outliers and anomalies to direct specific testing of your hypothesis.
-  
-# ALGORITHM:
-STEP 1: Import the required packages to perform Data Cleansing,Removing Outliers and Exploratory Data Analysis.
+## Aim: 
+To perform a study on Socket Programming
+## Introduction:
 
-STEP 2: Replace the null value using any one of the method from mode,median and mean based on the dataset available.
+Socket programming is a crucial aspect of network communication, allowing for data exchange between computers over a network. It forms the backbone of various networked applications, enabling communication between clients and servers. This study explores the fundamental concepts of socket programming, its use cases, and provides a practical example to demonstrate its implementation.
 
-STEP 3: Use boxplot method to analyze the outliers of the given dataset.
+## Understanding Socket Programming:
 
-STEP 4: Remove the outliers using Inter Quantile Range method.
+Socket programming involves the use of sockets, which serve as endpoints for communication. A socket is identified by an IP address and a port number, and it facilitates data transfer between a client and a server. The two main types of sockets are Stream Sockets, which provide a reliable, connection-oriented communication, and Datagram Sockets, which are connectionless and suitable for scenarios where reliability is less critical.
+ 
+## Key Concepts in Socket Programming:
+### 1. Sockets
+•	A socket is a software representation of a communication endpoint in a network.
+•	It is identified by an IP address and a port number.
+•	Sockets can be classified into two main types: Stream Sockets and Datagram Sockets.
+•	Stream Sockets provide a reliable, connection-oriented communication, while Datagram Sockets are connectionless and operate in a best-effort mode.
 
-STEP 5: Use Countplot method to analyze in a graphical method for categorical data.
+### 2. Client-Server Model
 
-STEP 6: Use displot method to represent the univariate distribution of data.
+•	Socket programming typically follows the client-server model.
+•	The server listens for incoming connections from clients, while clients initiate connections to the server.
+•	Servers are passive, waiting for connection requests, and clients are active, initiating communication.
 
-STEP 7: Use cross tabulation method to quantitatively analyze the relationship between multiple variables.
+### 3. TCP/IP Protocol:
 
-STEP 8: Use heatmap method of representation to show relationships between two variables, one plotted on each axis.
+•	Transmission Control Protocol (TCP) and Internet Protocol (IP) are the foundational protocols for socket programming.
+•	TCP provides reliable, connection-oriented communication, ensuring data integrity and order.
+•	IP facilitates the routing of data between devices in a network.
 
-## CODING AND OUTPUT
-```
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-df=pd.read_csv("titanic_dataset.csv")
-df
-```
-![image](https://github.com/user-attachments/assets/04084b84-3011-47a9-b879-d576d5d0881b)
-```
-df.info
-```
-![image](https://github.com/user-attachments/assets/e8943f04-b630-4b31-8ec0-af6ded26fcf3)
-```
-df.shape
-```
-```
-(891,120
-```
-```
-df.nunique()
-```
-![image](https://github.com/user-attachments/assets/fe652ce2-b3c8-4bb6-a15e-03714170b2c3)
-```
-df['Survived'].value_counts()
-```
-![image](https://github.com/user-attachments/assets/0c7c5545-6f7c-4f24-b388-8d0673394853)
+### 4. Basic Socket Functions:
 
-```
-sns.countplot(data=df,x="Survived",hue="Survived")
-```
-![image](https://github.com/user-attachments/assets/986a580a-0f6f-4b3b-96a1-72a8835984ed)
+•	Socket programming involves a set of functions provided by the operating system or programming language to create, bind, listen, accept, connect, send, and receive data through sockets.
+•	Examples of functions include socket(), bind(), listen(), accept(), connect(), send(), and recv().
 
-```
-df
-```
-![image](https://github.com/user-attachments/assets/e4389549-de49-479b-9434-d4464b70d6a6)
-```
-df.Pclass.unique()
-```
-```
-array([3,1,2])
-```
-```
-df.rename(columns={'Sex':'Gender'},inplace=True)
-df
-```
-![image](https://github.com/user-attachments/assets/8306e4c1-b9a7-4745-8561-cf35d4083568)
+## Server-Side Operations:
 
-```
-sns.catplot(x="Gender",col='Survived',hue="Gender",kind="count",data=df,height=5,aspect=.7)
-```
-![image](https://github.com/user-attachments/assets/1c23e59c-6334-4af8-9b5e-8e8e9430fb44)
+•	Servers create a socket using socket() and bind it to a specific IP address and port using bind().
+•	They then listen for incoming connections with listen() and accept connections with accept().
+•	Once a connection is establi
+•	shed, servers can send and receive data using send() and recv().
 
-```
-sns.catplot(x="Survived",hue="Gender",data=df,kind="count")
-```
-![image](https://github.com/user-attachments/assets/c1b79060-70fd-40f0-9a12-8581dfafccf8)
+## Client –Server Operations
+
+Clients create a socket using socket() and connect to a server using connect().
+After establishing a connection, clients can send and receive data using send() and recv().
+
+## Use Cases of Socket Programming:
+
+Socket programming finds applications in various domains, including web development, file transfer protocols, online gaming, and real-time communication. It is the foundation for protocols like HTTP, FTP, and SMTP, which power the internet. Socket programming enables the development of both server and client applications, facilitating the exchange of information between devices in a networked environment.
+
+## Example Use Cases:
+
+1.	Web servers: Web servers use socket programming to handle incoming HTTP requests from clients, serving web pages and content.
+2.	Chat Application: Instant messaging and chat applications use sockets to enable real-time communication between users.
+3.	File Transfer Protocol: Protocols like FTP (File Transfer Protocol) utilize socket programming for transferring files between a client and a server.
+4.	Networked Games: Online multiplayer games rely on socket programming to facilitate communication between game clients and servers.
+5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
+## CLIENT:
+```python
+import socket
+
+# Create a socket object
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect to the server
+client_socket.connect(('localhost', 8000))
+
+# Print the client's socket name
+print(f"Client connected from: {client_socket.getsockname()}")
+
+# Receive a message from the server
+server_message = client_socket.recv(1024).decode()
+print(f"Received from server: {server_message}")
+
+# Send a message to the server
+client_socket.send("Acknowledgement received from the client.".encode())
+
+# Close the connection
+client_socket.close()
 
 ```
-df.boxplot(column="Age",by="Survived")
-```
-![image](https://github.com/user-attachments/assets/ddf82923-0360-4dfa-b20f-89d853f1769c)
+## SERVER:
+```python
+import socket
+
+# Create a socket object
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind the socket to the host and port
+server_socket.bind(('localhost', 8000))
+
+# Listen for incoming connections (max 1 connection)
+server_socket.listen(1)
+print("Server is waiting for a connection...")
+
+# Accept the connection
+conn, addr = server_socket.accept()
+print(f"Connected by {addr}")
+
+# Send a message to the client
+conn.send("Hello from the server!".encode())
+
+# Receive a message from the client
+data = conn.recv(1024)
+print(f"Received from client: {data.decode()}")
+
+# Close the connection
+conn.close()
+server_socket.close()
 
 ```
-sns.scatterplot(x=df["Age"],y=df["Fare"])
-```
-![image](https://github.com/user-attachments/assets/9083b01d-4320-47e5-b008-ea18fbd3cddb)
 
-```
-sns.jointplot(x="Age",y="Fare",data=df)
-```
-![image](https://github.com/user-attachments/assets/7016386a-1d4e-4813-8282-c72505d8031a)
+## OUTPUT:
+### CLIENT:
+![image](https://github.com/user-attachments/assets/017a5300-51e3-40ef-8f6e-4a7fd236a88d)
 
-```
-fig, ax1 = plt.subplots(figsize=(8,5))
-plt = sns.boxplot(ax=ax1,x='Pclass',y='Age',hue='Gender',data=df)
-```
-![image](https://github.com/user-attachments/assets/2584c36a-eda3-49ad-9a75-d57c126cb08c)
-```
-sns.catplot(data=df,col="Survived",x="Gender",hue="Pclass",kind="count")
-```
-![image](https://github.com/user-attachments/assets/9c817d99-a843-4a80-8220-4af6516ab440)
 
-```
-ndf = df.select_dtypes(include='number')
-corr=ndf.corr()
-sns.heatmap(corr,annot=True)
-```
-![image](https://github.com/user-attachments/assets/c9900242-80a4-44e7-892f-9b6f1a9c4e1d)
-
-```
-sns.pairplot(df)
-```
-![image](https://github.com/user-attachments/assets/9be7d735-725c-402c-9b09-89806eff921c)
+### SERVER:
+![image-1](https://github.com/user-attachments/assets/b7d457ba-8f9c-43c3-84c7-1b7f6eecd1b0)
 
 
 
 
-# RESULT
-Thus we have perform Exploratory Data Analysis on the given data set.
+## Result:
+Thus the study of Socket Programming Completed Successfully
